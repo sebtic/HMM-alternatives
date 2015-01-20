@@ -1,0 +1,17 @@
+<assembly>
+  <id>native-${native-arch}-${native-os}-debug</id>
+  <formats>
+    <format>zip</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>target/native/debug</directory>
+      <outputDirectory>/</outputDirectory>
+    </fileSet>
+    <fileSet>
+      <directory>target/native/javah</directory>
+      <outputDirectory>/include</outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>

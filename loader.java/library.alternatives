@@ -1,0 +1,36 @@
+# le nom de la library
+name=HMMTK_Core
+
+# cf dependency
+require.alternatives.requirementchecker.OS=strict
+require.alternatives.requirementchecker.Arch=backward-compatible
+
+dependency.require=nomlib,nomlib2
+dependency.nomlib.alternatives.dependencychecker.Compiler=strict-equality
+dependency.nomlib.alternatives.dependencychecker.Linker=strict-equality
+dependency.nomlib.alternatives.dependencychecker.Mode=strict,unspecified
+dependency.nomlib.alternatives.dependencychecker.Arch=backward-compatibility,unspecified
+# l'ajout de # dans la nom d'une propriété permet de faire un ET (#1 et #2)
+# par defaut, le #numero est optionel, tout de qui est après # est ignoré
+# la virgule singifie ou
+
+dependency.nomlin.alternatives.dependencychecker.Regex#1=
+dependency.nomlin.alternatives.dependencychecker.Regex#2=
+
+
+dependency.nomlib.alternatives.dependencychecker.Compiler=strict-equality
+dependency.nomlib.alternatives.dependencychecker.Linker=strict-equality
+dependency.nomlib.alternatives.dependencychecker.Mode=strict-equality or unspecified
+dependency.nomlib.alternatives.dependencychecker.Arch=backward-compatibility or unspecified
+
+# les propriétés utilisées par les validateurs
+os=linux
+distribution=gentoo
+
+
+priority=0
+# le fichier à charger via JNI (normalement non spécifié si ce n'est pas une lib JNI)
+library=
+# les fichiers supplementaires à extraire
+extractlibrary.1=
+extractlibrary.2=

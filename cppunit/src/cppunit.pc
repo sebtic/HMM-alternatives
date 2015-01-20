@@ -1,0 +1,7 @@
+Name: CppUnit
+Description: The C++ Unit Test Library
+Version: 1.12.0
+Requires: 
+Libs: -lcppunit
+Cflags: -DCPPUNIT_STD_NEED_ALLOCATOR=0
+

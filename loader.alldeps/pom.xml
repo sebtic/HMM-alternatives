@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.projectsforge.alternatives.loader</groupId>
+  <artifactId>alldeps</artifactId>
+  <packaging>jar</packaging>
+  <version>0.6</version>
+  <name>ALTERnatives Loader - All dependencies</name>
+  <url>https://projectsforge.org/projects/alternatives</url>
+
+  <parent>
+    <artifactId>javabuilder</artifactId>
+    <groupId>org.projectsforge.alternatives</groupId>
+    <version>0.6</version>
+    <relativePath>../javabuilder</relativePath>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>jni-classes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.utils</groupId>
+      <artifactId>path</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>jni</artifactId>
+      <classifier>alternatives-i386-linux</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>jni</artifactId>
+      <classifier>alternatives-amd64-linux</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>jni</artifactId>
+      <classifier>alternatives-i386-windows</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>jni</artifactId>
+      <classifier>alternatives-amd64-windows</classifier>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <id>macosx-amd64-support</id>
+      <activation>
+        <os>
+          <name>mac os x</name>
+          <arch>i386</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.projectsforge.alternatives.loader</groupId>
+          <artifactId>jni</artifactId>
+          <classifier>alternatives-amd64-macosx</classifier>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+</project>

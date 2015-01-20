@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.projectsforge.alternatives</groupId>
+  <artifactId>genericnativebuilder</artifactId>
+  <packaging>pom</packaging>
+  <version>0.6</version>
+  <name>ALTERnatives genericnativebuilder</name>
+  <url>https://projectsforge.org/projects/alternatives</url>
+
+  <parent>
+    <groupId>org.projectsforge.alternatives</groupId>
+    <artifactId>nativebuilder</artifactId>
+    <version>0.6</version>
+    <relativePath>../nativebuilder</relativePath>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectsforge.alternatives</groupId>
+      <artifactId>genericbuild-utils</artifactId>
+      <type>zip</type>
+      <classifier>build-utils</classifier>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>native-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <descriptors>
+                <descriptor>${project.build.directory}/extracted/utils/assembly/native-generic.xml</descriptor>
+                <descriptor>${project.build.directory}/extracted/utils/assembly/alternatives.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

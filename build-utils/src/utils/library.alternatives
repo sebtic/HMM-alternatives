@@ -1,0 +1,16 @@
+name=@CMAKE_PROJECT_NAME@
+
+alternatives.Os=@ALTERNATIVE_OS@
+alternatives.Arch=@ALTERNATIVE_ARCH@
+alternatives.Mode=@ALTERNATIVE_MODE@
+alternatives.Compiler=@ALTERNATIVE_COMPILER@
+alternatives.Linker=@ALTERNATIVE_LINKER@
+
+priority=@ALTERNATIVE_PRIORITY@
+
+dependency.require=@ALTERNATIVE_DEPENDENCIES_REQUIRE@
+
+@ALTERNATIVE_EXTRACT@
+
+@ALTERNATIVE_EXTRA_PARAMS@
+

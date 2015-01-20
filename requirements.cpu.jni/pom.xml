@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.projectsforge.alternatives.requirements.cpu</groupId>
+  <artifactId>jni</artifactId>
+  <packaging>pom</packaging>
+  <version>0.6</version>
+  <name>ALTERnatives Loader CPU requirement facility - JNI library</name>
+  <url>http://maven.apache.org</url>
+
+  <parent>
+    <artifactId>genericnativebuilder</artifactId>
+    <groupId>org.projectsforge.alternatives</groupId>
+    <version>0.6</version>
+    <relativePath>../genericnativebuilder</relativePath>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.projectsforge.alternatives</groupId>
+      <artifactId>cppunit</artifactId>
+      <type>zip</type>
+      <classifier>native-${native-arch}-${native-os}-generic</classifier>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.loader</groupId>
+      <artifactId>jni-classes</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.requirements.cpu</groupId>
+      <artifactId>cpuid</artifactId>
+      <type>zip</type>
+      <classifier>native-${native-arch}-${native-os}-generic</classifier>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectsforge.alternatives.requirements.cpu</groupId>
+      <artifactId>jni-classes</artifactId>
+    </dependency>
+  </dependencies>
+</project>

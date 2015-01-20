@@ -1,0 +1,13 @@
+<assembly>
+  <id>alternatives-${native-arch}-${native-os}</id>
+  <formats>
+    <format>jar</format>
+  </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
+  <fileSets>
+    <fileSet>
+      <directory>target${file.separator}alternatives</directory>
+      <outputDirectory>/native/${alternativesPath}/${native-arch}/${native-os}</outputDirectory>
+    </fileSet>
+  </fileSets>
+</assembly>

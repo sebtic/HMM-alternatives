@@ -408,13 +408,13 @@
 							<target if="${has-clean-script}">
 								<mkdir dir="${project.build.directory}" />
 								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-									failonerror="true">
+									failonerror="false">
 									<arg value="chmod" />
 									<arg value="+x" />
 									<arg value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 								</exec>
 								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-									failonerror="true">
+									failonerror="false">
 									<arg value="bash" />
 									<arg value="-c" />
 									<arg value="cd target; extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh" />

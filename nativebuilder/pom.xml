@@ -362,7 +362,7 @@
 									<arg value="bash" />
 									<arg value="-c" />
 									<arg
-										value="cd target; chmod +x extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+										value="pwd; ls -R; cd target; chmod +x extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 								</exec>
 								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
 									failonerror="true">

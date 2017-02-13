@@ -364,7 +364,7 @@
 								<echo file="${project.build.directory}/testDisabled" message="${testDisabled}" />
 								<echo file="${project.build.directory}/version" message="${project.version}" />
 								<echo>MARK 0</echo>
-                <exec dir="${project.build.directory}/.." executable="target/dockcross-${native-arch}-${native-os}"
+                <exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
                   failonerror="true">
                   <arg value="bash" />
                   <arg value="-c" />

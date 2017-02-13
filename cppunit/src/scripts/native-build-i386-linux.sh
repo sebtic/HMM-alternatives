@@ -1,7 +1,5 @@
 #!/bin/bash
 
-pwd
-
 basedir=$(pwd)
 mode=generic
 processor=generic
@@ -17,9 +15,6 @@ cd ${basedir}/build/${mode}/${processor}
 chmod 744 config/install-sh
 
 ./configure "--prefix=${basedir}/build/${mode}/${processor}/installdir" --without-gnu-ld --disable-doxygen --disable-dot --disable-latex-docs --disable-static
-export
-pwd
-ls
 make && make install
 errorcode=$?
 

@@ -1,8 +1,6 @@
 #!/bin/bash
 
 export basedir=$(pwd)
-export CC=i686-pc-mingw32-gcc
-export CXX=i686-pc-mingw32-g++
 export CMAKE_SYSTEM_NAME=Windows
 export CMAKE_SYSTEM_PROCESSOR=i386
 export buildsystem=generic

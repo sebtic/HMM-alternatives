@@ -1,10 +1,8 @@
 #!/bin/bash
 
 export basedir=$(pwd)
-#export CC=i686-pc-mingw32-gcc
-#export CXX=i686-pc-mingw32-g++
-#export CMAKE_SYSTEM_NAME=Windows
-#export CMAKE_SYSTEM_PROCESSOR=i386
+export CMAKE_SYSTEM_NAME=Windows
+export CMAKE_SYSTEM_PROCESSOR=i386
 export buildsystem=default
 
 if [[ -f ../src/scripts/$(basename $0) ]]; then

@@ -5,17 +5,15 @@ if [[ ! -f ../src/CMakeLists.txt ]]; then
     exit 0
 fi
 
-if [ -z "$(which java)" ]; then
-	export SDKMAN_DIR=/work/target/sdkman
-	curl -s get.sdkman.io | bash 
-	set -x \
-	&& echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config \
-	&& echo "sdkman_auto_selfupdate=false" >> $SDKMAN_DIR/etc/config \
-	&& echo "sdkman_insecure_ssl=false" >> $SDKMAN_DIR/etc/config
-	source "$SDKMAN_DIR/bin/sdkman-init.sh" 
-	sdk install java
-	source "$SDKMAN_DIR/bin/sdkman-init.sh"
-fi 
+export SDKMAN_DIR=/work/target/sdkman
+curl -s get.sdkman.io | bash 
+set -x \
+&& echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config \
+&& echo "sdkman_auto_selfupdate=false" >> $SDKMAN_DIR/etc/config \
+&& echo "sdkman_insecure_ssl=false" >> $SDKMAN_DIR/etc/config
+source "$SDKMAN_DIR/bin/sdkman-init.sh" 
+sdk install java
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
 
 chmod +x ${basedir}/extracted/utils/scripts/getprocessors.sh
 

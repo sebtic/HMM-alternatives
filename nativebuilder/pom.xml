@@ -104,8 +104,7 @@
 								</goals>
 								<configuration>
 									<target if="${has-doxygen-script}">
-										<exec dir="${project.build.directory}" executable="bash"
-											failonerror="true">
+										<exec dir="${project.build.directory}" executable="bash" failonerror="true">
 											<arg
 												value="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh" />
 										</exec>
@@ -173,15 +172,13 @@
 											failonerror="true">
 											<arg value="chmod" />
 											<arg value="+x" />
-											<arg
-												value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+											<arg value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 										</exec>
 										<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
 											failonerror="true">
 											<arg value="bash" />
 											<arg value="-c" />
-											<arg
-												value="cd target; extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh" />
+											<arg value="cd target; extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh" />
 										</exec>
 									</target>
 								</configuration>
@@ -314,8 +311,7 @@
 							<exportAntProperties>true</exportAntProperties>
 							<target>
 								<mkdir dir="${project.build.directory}" />
-								<exec dir="${project.build.directory}" executable="bash"
-									failonerror="true">
+								<exec dir="${project.build.directory}" executable="bash" failonerror="true">
 									<arg
 										value="${project.build.directory}/extracted/utils/scripts/pull-dockcross-${native-arch}-${native-os}.sh" />
 								</exec>
@@ -347,37 +343,32 @@
 						<configuration>
 							<target if="${has-build-script}">
 								<mkdir dir="${project.build.directory}" />
-								
+
 								<property name="javah.classpath" refid="maven.compile.classpath" />
-								<echo file="${project.build.directory}/javah-classpath"
-									message="${javah.classpath}" />
-								<exec dir="${project.build.directory}/" executable="chmod"
-									failonerror="true">
+								<echo file="${project.build.directory}/javah-classpath" message="${javah.classpath}" />
+								<exec dir="${project.build.directory}/" executable="chmod" failonerror="true">
 									<arg value="+x" />
 									<arg value="${project.build.directory}/extracted/utils/scripts/prepare-classpath.sh" />
 								</exec>
-								<exec dir="${project.build.directory}/" executable="bash"
-									failonerror="true">
+								<exec dir="${project.build.directory}/" executable="bash" failonerror="true">
 									<arg value="-c" />
 									<arg value="${project.build.directory}/extracted/utils/scripts/prepare-classpath.sh" />
-								</exec>								
-								<echo file="${project.build.directory}/java-home" message="/work/target/sdkman/candidates/java/current/" />
-								<echo file="${project.build.directory}/testDisabled"
-									message="${testDisabled}" />
-								<echo file="${project.build.directory}/version" message="${project.version}" />
-								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-									failonerror="true">
-									<arg value="chmod" />
-									<arg value="+x" />
-									<arg
-										value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 								</exec>
+								<echo file="${project.build.directory}/java-home" message="/work/target/sdkman/candidates/java/current/" />
+								<echo file="${project.build.directory}/testDisabled" message="${testDisabled}" />
+								<echo file="${project.build.directory}/version" message="${project.version}" />
 								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
 									failonerror="true">
 									<arg value="bash" />
 									<arg value="-c" />
 									<arg
-										value="cd target; extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+										value="cd target; chmod +x extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+								</exec>
+								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
+									failonerror="true">
+									<arg value="bash" />
+									<arg value="-c" />
+									<arg value="cd target; extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 								</exec>
 							</target>
 						</configuration>
@@ -411,15 +402,13 @@
 									failonerror="true">
 									<arg value="chmod" />
 									<arg value="+x" />
-									<arg
-										value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+									<arg value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 								</exec>
 								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
 									failonerror="true">
 									<arg value="bash" />
 									<arg value="-c" />
-									<arg
-										value="cd target; extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh" />
+									<arg value="cd target; extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh" />
 								</exec>
 							</target>
 						</configuration>

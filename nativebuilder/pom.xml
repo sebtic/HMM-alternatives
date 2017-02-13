@@ -357,7 +357,7 @@
 								<echo file="${project.build.directory}/java-home" message="/work/target/sdkman/candidates/java/current/" />
 								<echo file="${project.build.directory}/testDisabled" message="${testDisabled}" />
 								<echo file="${project.build.directory}/version" message="${project.version}" />
-								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
+								<exec dir="${project.build.directory}/.." executable="target/dockcross-${native-arch}-${native-os}"
 									failonerror="true">
 									<arg value="bash" />
 									<arg value="-c" />
@@ -368,7 +368,7 @@
 									failonerror="true">
 									<arg value="bash" />
 									<arg value="-c" />
-									<arg value="cd target; extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+									<arg value="pwd; ls -R; cd target; extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
 								</exec>
 							</target>
 						</configuration>

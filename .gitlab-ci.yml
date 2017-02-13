@@ -13,7 +13,8 @@ before_script:
   - ssh-keyscan -p 2223 static.projectsforge.org > ~/.ssh/known_hosts
   - eval $(ssh-agent -s)
   - echo "$SSH_PRIVATE_KEY" | ssh-add - 
-  - apt-get update && apt-get install -y doxygen
+  - sudo apt-get update
+  - sudo apt-get install -y doxygen
 
 # build of master
 build_job:

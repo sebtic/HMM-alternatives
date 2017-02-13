@@ -4,9 +4,10 @@ stages:
   - build
 
 before_script:
+  - source /etc/profile
   - sdkw install java
   - sdkw install maven
-  - source "$SDKMAN_DIR/bin/sdkman-init.sh"
+  - source /etc/profile
   # remove any previously deployed artifact
   - rm -rf /home/user/.m2/repository/org/projectsforge/
   - mkdir -p ~/.ssh

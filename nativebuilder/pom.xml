@@ -368,7 +368,7 @@
                   failonerror="true">
                   <arg value="-c" />
                   <arg
-                    value="pwd; find ." />
+                    value="pwd; find . -exec ls -al {} \;" />
                 </exec>
                 <exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
                   failonerror="true">

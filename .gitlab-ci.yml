@@ -23,9 +23,9 @@ build_job:
   only:
     - master
   script:
-    - find . -iname "target" -exec rm -rf {} \; || true
-    - CROSSDEV=1 mvn -P\!linux-amd64,linux-i386,\!linux-amd64-support,linux-i386-support,linux-i386 clean || true
-    - CROSSDEV=1 mvn -P\!linux-amd64,linux-i386,\!linux-amd64-support,linux-i386-support,linux-i386 install
+#    - find . -iname "target" -exec rm -rf {} \; || true
+#    - CROSSDEV=1 mvn -P\!linux-amd64,linux-i386,\!linux-amd64-support,linux-i386-support,linux-i386 clean || true
+#    - CROSSDEV=1 mvn -P\!linux-amd64,linux-i386,\!linux-amd64-support,linux-i386-support,linux-i386 install
 # deploy
     - find . -iname "target" -exec rm -rf {} \; || true
     - CROSSDEV=1 mvn -P\!linux-amd64,windows-i386,\!linux-amd64-support,windows-i386-support,windows-i386 clean || true

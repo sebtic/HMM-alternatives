@@ -1,0 +1,40 @@
+image: projectsforge/buildbase
+
+stages:
+  - build
+
+before_script:
+  - sdkw install java
+  - sdkw install maven
+  - source "$SDKMAN_DIR/bin/sdkman-init.sh"
+  # remove any previously deployed artifact
+  - rm -rf /home/user/.m2/repository/org/projectsforge/
+  - mkdir -p ~/.ssh
+  - ssh-keyscan -p 2223 static.projectsforge.org > ~/.ssh/known_hosts
+  - eval $(ssh-agent -s)
+  - echo "$SSH_PRIVATE_KEY" | ssh-add - 
+  - apt-get update && apt-get install -y doxygen
+
+# build of master
+build_job:
+  stage: build
+  only:
+    - master
+  script:
+    - find . -iname "target" -exec rm -rf {} \; || true
+    - CROSSDEV=1 mvn -P\!linux-amd64,linux-i386,\!linux-amd64-support,linux-i386-support,linux-i386 clean || true
+    - CROSSDEV=1 mvn -P\!linux-amd64,linux-i386,\!linux-amd64-support,linux-i386-support,linux-i386 install deploy
+    - find . -iname "target" -exec rm -rf {} \; || true
+    - CROSSDEV=1 mvn -P\!linux-amd64,windows-i386,\!linux-amd64-support,windows-i386-support,windows-i386 clean || true
+    - CROSSDEV=1 mvn -P\!linux-amd64,windows-i386,\!linux-amd64-support,windows-i386-support,windows-i386 install deploy
+    - find . -iname "target" -exec rm -rf {} \; || true
+    - CROSSDEV=1 mvn -P\!linux-amd64,windows-amd64,\!linux-amd64-support,windows-amd64-support,windows-amd64 clean || true
+    - CROSSDEV=1 mvn -P\!linux-amd64,windows-amd64,\!linux-amd64-support,windows-amd64-support,windows-amd64 install deploy
+    - find . -iname "target" -exec rm -rf {} \; || true
+    - mvn -Plinux-i386-support,linux-amd64-support,windows-i386-support,windows-amd64-support,doxygen-support,test-support,javadoc-support,alldeps-support clean || true
+    - mvn -Plinux-i386-support,linux-amd64-support,windows-i386-support,windows-amd64-support,doxygen-support,test-support,javadoc-support,alldeps-support install deploy 
+  tags:
+    - docker
+
+
+

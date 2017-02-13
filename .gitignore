@@ -4,3 +4,4 @@
 .classpath
 pom.xml.*
 release.properties
+target

@@ -1,398 +1,441 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.projectsforge.alternatives</groupId>
-  <artifactId>nativebuilder</artifactId>
-  <packaging>pom</packaging>
-  <version>0.6</version>
-  <name>ALTERnatives nativebuilder</name>
-  <url>https://projectsforge.org/projects/alternatives</url>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.projectsforge.alternatives</groupId>
+	<artifactId>nativebuilder</artifactId>
+	<packaging>pom</packaging>
+	<version>0.6</version>
+	<name>ALTERnatives nativebuilder</name>
+	<url>https://projectsforge.org/projects/alternatives</url>
 
-  <parent>
-    <artifactId>alternatives</artifactId>
-    <groupId>org.projectsforge</groupId>
-    <version>0.6</version>
-    <relativePath>..</relativePath>
-  </parent>
+	<parent>
+		<artifactId>alternatives</artifactId>
+		<groupId>org.projectsforge</groupId>
+		<version>0.6</version>
+		<relativePath>..</relativePath>
+	</parent>
 
-  <properties>
-    <testDisabled>true</testDisabled>
-    <alternativesPath>${project.groupId}.${project.artifactId}-${project.version}</alternativesPath>
-  </properties>
+	<properties>
+		<testDisabled>true</testDisabled>
+		<alternativesPath>${project.groupId}.${project.artifactId}-${project.version}</alternativesPath>
+	</properties>
 
-  <profiles>
-    <profile>
-      <id>linux-i386</id>
-      <activation>
-        <os>
-          <family>linux</family>
-          <arch>i386</arch>
-        </os>
-      </activation>
-      <properties>
-        <native-arch>i386</native-arch>
-        <native-os>linux</native-os>
-      </properties>
-    </profile>
-    <profile>
-      <id>linux-amd64</id>
-      <activation>
-        <os>
-          <family>linux</family>
-          <arch>amd64</arch>
-        </os>
-      </activation>
-      <properties>
-        <native-arch>amd64</native-arch>
-        <native-os>linux</native-os>
-      </properties>
-    </profile>
-    <profile>
-      <id>windows-i386</id>
-      <activation>
-        <os>
-          <family>windows</family>
-          <arch>x86</arch>
-        </os>
-      </activation>
-      <properties>
-        <native-arch>i386</native-arch>
-        <native-os>windows</native-os>
-      </properties>
-    </profile>
-    <profile>
-      <id>windows-amd64</id>
-      <activation>
-        <os>
-          <family>windows</family>
-          <arch>amd64</arch>
-        </os>
-      </activation>
-      <properties>
-        <native-arch>amd64</native-arch>
-        <native-os>windows</native-os>
-      </properties>
-    </profile>
-    <profile>
-      <id>macosx-amd64</id>
-      <activation>
-        <os>
-          <name>mac os x</name>
-          <arch>i386</arch>
-        </os>
-      </activation>
-      <properties>
-        <native-arch>amd64</native-arch>
-        <native-os>macosx</native-os>
-      </properties>
-    </profile>
-    <profile>
-      <id>doxygen-support</id>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>native-has-doxygen</id>
-                <phase>process-classes</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <exportAntProperties>true</exportAntProperties>
-                  <target>
-                    <available
-                      file="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh"
-                      property="has-doxygen-script" />
-                    <echo>Has doxygen script: ${has-doxygen-script}</echo>
-                  </target>
-                </configuration>
-              </execution>
-              <execution>
-                <id>native-doxygen</id>
-                <phase>process-classes</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target if="${has-doxygen-script}">
-                    <exec dir="${project.build.directory}"
-                      executable="sh" failonerror="true">
-                      <arg
-                        value="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh" />
-                    </exec>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-          <plugin>
-            <artifactId>maven-assembly-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>native-doxygen-assembly</id>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <descriptors>
-                    <descriptor>${project.build.directory}/extracted/utils/assembly/doxygen.xml</descriptor>
-                  </descriptors>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>test-support</id>
-      <properties>
-        <testDisabled>false</testDisabled>
-      </properties>
-      <build>
-        <plugins>
-          <plugin>
-            <artifactId>maven-antrun-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>native-has-test</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                <exportAntProperties>true</exportAntProperties>
-                  <target>
-                    <available
-                      file="${project.build.directory}/extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh"
-                      property="has-test-script" />
-                    <echo>Has test script: ${has-test-script}</echo>
-                  </target>
-                </configuration>
-              </execution>
-              <execution>
-                <id>native-test</id>
-                <phase>test</phase>
-                <goals>
-                  <goal>run</goal>
-                </goals>
-                <configuration>
-                  <target if="${has-test-script}">
-                    <mkdir dir="${project.build.directory}" />
-                    <exec dir="${project.build.directory}"
-                      executable="sh" failonerror="true">
-                      <arg
-                        value="${project.build.directory}/extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh" />
-                    </exec>
-                  </target>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
+	<profiles>
+		<profile>
+			<id>linux-i386</id>
+			<activation>
+				<os>
+					<family>linux</family>
+					<arch>i386</arch>
+				</os>
+			</activation>
+			<properties>
+				<native-arch>i386</native-arch>
+				<native-os>linux</native-os>
+			</properties>
+		</profile>
+		<profile>
+			<id>linux-amd64</id>
+			<activation>
+				<os>
+					<family>linux</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<native-arch>amd64</native-arch>
+				<native-os>linux</native-os>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows-i386</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<properties>
+				<native-arch>i386</native-arch>
+				<native-os>windows</native-os>
+			</properties>
+		</profile>
+		<profile>
+			<id>windows-amd64</id>
+			<activation>
+				<os>
+					<family>windows</family>
+					<arch>amd64</arch>
+				</os>
+			</activation>
+			<properties>
+				<native-arch>amd64</native-arch>
+				<native-os>windows</native-os>
+			</properties>
+		</profile>
+		<profile>
+			<id>macosx-amd64</id>
+			<activation>
+				<os>
+					<name>mac os x</name>
+					<arch>i386</arch>
+				</os>
+			</activation>
+			<properties>
+				<native-arch>amd64</native-arch>
+				<native-os>macosx</native-os>
+			</properties>
+		</profile>
+		<profile>
+			<id>doxygen-support</id>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>native-has-doxygen</id>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<exportAntProperties>true</exportAntProperties>
+									<target>
+										<available
+											file="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh"
+											property="has-doxygen-script" />
+										<echo>Has doxygen script: ${has-doxygen-script}</echo>
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>native-doxygen</id>
+								<phase>process-classes</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target if="${has-doxygen-script}">
+										<exec dir="${project.build.directory}" executable="bash"
+											failonerror="true">
+											<arg
+												value="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh" />
+										</exec>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>native-doxygen-assembly</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+								<configuration>
+									<descriptors>
+										<descriptor>${project.build.directory}/extracted/utils/assembly/doxygen.xml</descriptor>
+									</descriptors>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>test-support</id>
+			<properties>
+				<testDisabled>false</testDisabled>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>native-has-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<exportAntProperties>true</exportAntProperties>
+									<target>
+										<available
+											file="${project.build.directory}/extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh"
+											property="has-test-script" />
+										<echo>Has test script: ${has-test-script}</echo>
+									</target>
+								</configuration>
+							</execution>
+							<execution>
+								<id>native-test</id>
+								<phase>test</phase>
+								<goals>
+									<goal>run</goal>
+								</goals>
+								<configuration>
+									<target if="${has-test-script}">
+										<mkdir dir="${project.build.directory}" />
+										<exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
+											failonerror="true">
+											<arg value="chmod" />
+											<arg value="+x" />
+											<arg
+												value="extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+										</exec>
+										<exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
+											failonerror="true">
+											<arg value="bash" />
+											<arg value="-c" />
+											<arg
+												value="extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh" />
+										</exec>
+									</target>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.projectsforge.alternatives</groupId>
-      <artifactId>build-utils</artifactId>
-      <version>0.6</version>
-      <type>zip</type>
-      <classifier>build-utils</classifier>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.projectsforge.alternatives</groupId>
+			<artifactId>build-utils</artifactId>
+			<version>0.6</version>
+			<type>zip</type>
+			<classifier>build-utils</classifier>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 
-  <build>
+	<build>
 
-    <plugins>
-      <plugin>
-        <artifactId>maven-dependency-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>unpack-utilitary-native-dependencies</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/extracted</outputDirectory>
-              <includeTypes>zip</includeTypes>
-              <includeClassifiers>build-utils</includeClassifiers>
-            </configuration>
-          </execution>
-          <execution>
-            <id>unpack-generic-native-dependencies</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/extracted/generic</outputDirectory>
-              <includeTypes>zip</includeTypes>
-              <includeClassifiers>native-${native-arch}-${native-os}-generic
-              </includeClassifiers>
-            </configuration>
-          </execution>
-          <execution>
-            <id>unpack-debug-native-dependencies</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/extracted/debug</outputDirectory>
-              <includeTypes>zip</includeTypes>
-              <includeClassifiers>native-${native-arch}-${native-os}-debug</includeClassifiers>
-            </configuration>
-          </execution>
-          <execution>
-            <id>unpack-release-native-dependencies</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>unpack-dependencies</goal>
-            </goals>
-            <configuration>
-              <outputDirectory>${project.build.directory}/extracted/release</outputDirectory>
-              <includeTypes>zip</includeTypes>
-              <includeClassifiers>native-${native-arch}-${native-os}-release</includeClassifiers>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
+		<plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack-utilitary-native-dependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/extracted</outputDirectory>
+							<includeTypes>zip</includeTypes>
+							<includeClassifiers>build-utils</includeClassifiers>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-generic-native-dependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/extracted/generic</outputDirectory>
+							<includeTypes>zip</includeTypes>
+							<includeClassifiers>native-${native-arch}-${native-os}-generic
+							</includeClassifiers>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-debug-native-dependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/extracted/debug</outputDirectory>
+							<includeTypes>zip</includeTypes>
+							<includeClassifiers>native-${native-arch}-${native-os}-debug</includeClassifiers>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-release-native-dependencies</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${project.build.directory}/extracted/release</outputDirectory>
+							<includeTypes>zip</includeTypes>
+							<includeClassifiers>native-${native-arch}-${native-os}-release</includeClassifiers>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>copy-filtrable-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <encoding>UTF-8</encoding>
-              <outputDirectory>${basedir}/target/filtered-resources</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>${basedir}/target/extracted/utils/filtrable-resources</directory>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-          <execution>
-            <id>copy-alternatives-resources</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>copy-resources</goal>
-            </goals>
-            <configuration>
-              <encoding>UTF-8</encoding>
-              <outputDirectory>${basedir}/target/alternatives</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>src/alternatives-resources</directory>
-                  <filtering>true</filtering>
-                </resource>
-              </resources>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-antrun-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>native-has-build</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <exportAntProperties>true</exportAntProperties>
-              <target>
-                <available
-                  file="${project.build.directory}/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh"
-                  property="has-build-script" />
-                <echo>Has build script: ${has-build-script}</echo>
-              </target>
-            </configuration>
-          </execution>
-          <execution>
-            <id>native-build</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <target if="${has-build-script}">
-                <mkdir dir="${project.build.directory}" />
-                <property name="javah.classpath" refid="maven.compile.classpath" />
-                <echo file="${project.build.directory}/javah-classpath"
-                  message="${javah.classpath}" />
-                <echo file="${project.build.directory}/java-home"
-                  message="${java.home}/.." />
-                <echo file="${project.build.directory}/testDisabled"
-                  message="${testDisabled}" />
-                <echo file="${project.build.directory}/version"
-                  message="${project.version}" />
-                <exec dir="${project.build.directory}" executable="sh"
-                  failonerror="true">
-                  <arg
-                    value="${project.build.directory}/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
-                </exec>
-              </target>
-            </configuration>
-          </execution>
-          <execution>
-            <id>native-has-clean</id>
-            <phase>pre-clean</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <exportAntProperties>true</exportAntProperties>
-              <target>
-                <available
-                  file="${project.build.directory}/extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh"
-                  property="has-clean-script" />
-                <echo>Has clean script: ${has-clean-script}</echo>
-              </target>
-            </configuration>
-          </execution>
-          <execution>
-            <id>native-clean</id>
-            <phase>pre-clean</phase>
-            <goals>
-              <goal>run</goal>
-            </goals>
-            <configuration>
-              <target if="${has-clean-script}">
-                <mkdir dir="${project.build.directory}" />
-                <exec dir="${project.build.directory}" executable="sh"
-                  failonerror="false">
-                  <arg
-                    value="${project.build.directory}/extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh" />
-                </exec>
-              </target>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <skipTests>${testDisabled}</skipTests>
-          <forkMode>always</forkMode>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-filtrable-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${basedir}/target/filtered-resources</outputDirectory>
+							<resources>
+								<resource>
+									<directory>${basedir}/target/extracted/utils/filtrable-resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>copy-alternatives-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<outputDirectory>${basedir}/target/alternatives</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/alternatives-resources</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>pull-dockcross</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<exportAntProperties>true</exportAntProperties>
+							<target>
+								<mkdir dir="${project.build.directory}" />
+								<exec dir="${project.build.directory}" executable="bash"
+									failonerror="true">
+									<arg
+										value="${project.build.directory}/extracted/utils/scripts/pull-dockcross-${native-arch}-${native-os}.sh" />
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>native-has-build</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<exportAntProperties>true</exportAntProperties>
+							<target>
+								<available
+									file="${project.build.directory}/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh"
+									property="has-build-script" />
+								<echo>Has build script: ${has-build-script}</echo>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>native-build</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target if="${has-build-script}">
+								<mkdir dir="${project.build.directory}" />
+								<property name="javah.classpath" refid="maven.compile.classpath" />
+								<echo file="${project.build.directory}/javah-classpath"
+									message="${javah.classpath}" />
+								<echo file="${project.build.directory}/java-home" message="${java.home}/.." />
+								<echo file="${project.build.directory}/testDisabled"
+									message="${testDisabled}" />
+								<echo file="${project.build.directory}/version" message="${project.version}" />
+								<exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
+									failonerror="true">
+									<arg value="chmod" />
+									<arg value="+x" />
+									<arg
+										value="extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+								</exec>
+								<exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
+									failonerror="true">
+									<arg value="bash" />
+									<arg value="-c" />
+									<arg
+										value="extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>native-has-clean</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<exportAntProperties>true</exportAntProperties>
+							<target>
+								<available
+									file="${project.build.directory}/extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh"
+									property="has-clean-script" />
+								<echo>Has clean script: ${has-clean-script}</echo>
+							</target>
+						</configuration>
+					</execution>
+					<execution>
+						<id>native-clean</id>
+						<phase>pre-clean</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target if="${has-clean-script}">
+								<mkdir dir="${project.build.directory}" />
+								<exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
+									failonerror="true">
+									<arg value="chmod" />
+									<arg value="+x" />
+									<arg
+										value="extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+								</exec>
+								<exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
+									failonerror="true">
+									<arg value="bash" />
+									<arg value="-c" />
+									<arg
+										value="extracted/utils/scripts/native-clean-${native-arch}-${native-os}.sh" />
+								</exec>
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<skipTests>${testDisabled}</skipTests>
+					<forkMode>always</forkMode>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

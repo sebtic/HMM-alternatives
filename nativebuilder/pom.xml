@@ -364,19 +364,6 @@
 								<echo file="${project.build.directory}/testDisabled" message="${testDisabled}" />
 								<echo file="${project.build.directory}/version" message="${project.version}" />
 								<echo>MARK 0</echo>
-								<exec dir="${project.build.directory}/../" executable="bash"
-                  failonerror="true">
-                  <arg value="-c" />
-                  <arg
-                    value="target/dockcross-${native-arch}-${native-os} find" />
-                </exec>
-                <echo>MARK 00</echo>
-                <exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
-                  failonerror="true">
-                  <arg
-                    value="find ." />
-                </exec>
-								<echo>MARK 1</echo>
 								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
 									failonerror="true">
 									<arg value="bash" />

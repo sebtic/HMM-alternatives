@@ -368,12 +368,10 @@
                   failonerror="true">
                   <arg value="-c" />
                   <arg
-                    value="pwd; find . -exec ls -al {} \;" />
+                    value="pwd; find" />
                 </exec>
-                <exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
+                <exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
                   failonerror="true">
-                  <arg value="bash" />
-                  <arg value="-c" />
                   <arg
                     value="find ." />
                 </exec>

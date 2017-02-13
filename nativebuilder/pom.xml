@@ -368,8 +368,9 @@
                   failonerror="true">
                   <arg value="-c" />
                   <arg
-                    value="pwd; find" />
+                    value="target/dockcross-${native-arch}-${native-os} find" />
                 </exec>
+                <echo>MARK 00</echo>
                 <exec dir="${project.build.directory}" executable="./dockcross-${native-arch}-${native-os}"
                   failonerror="true">
                   <arg

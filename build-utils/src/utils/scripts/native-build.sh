@@ -52,7 +52,8 @@ if  [ -f $SCRIPT ]; then
 	chmod +x $SCRIPT
 	echo "Running script with dockcross ..."
 	pwd
-	target/dockcross-${nativearch}-${nativeos} bash -c "id; ls -al; pwd; export HOME=/root; cd /work/target; ls -al; pwd; bash /work/$SCRIPT"
+	set -x
+	target/dockcross-${nativearch}-${nativeos} bash -c "id; ls -al; pwd; cd /work/target; ls -al; pwd; bash /work/$SCRIPT"
 	result=$?
 	echo "Script has terminated"
 	exit $result

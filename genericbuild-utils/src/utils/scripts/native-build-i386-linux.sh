@@ -13,5 +13,5 @@ if [[ -f ../src/scripts/$(basename $0) ]]; then
   . ../src/scripts/$(basename $0)
 else
   echo "Buindling with generic build scheme..."
-  . ${basedir}/extracted/utils/scripts/cmake-build.sh
+ bash ${basedir}/extracted/utils/scripts/cmake-build.sh
 fi

@@ -44,7 +44,7 @@ do
 done
 mv new-javah-classpath javah-classpath
 cd ..
-
+ 
 # build script
 SCRIPT="target/extracted/utils/scripts/native-build-${nativearch}-${nativeos}.sh"
 if  [ -f $SCRIPT ]; then

@@ -11,7 +11,7 @@ before_script:
   # remove any previously deployed artifact
   - rm -rf /home/user/.m2/repository/org/projectsforge/
   - mkdir -p ~/.ssh
-  - ssh-keyscan -p 2223 static.projectsforge.org > ~/.ssh/known_hosts
+  - ssh-keyscan -p 2223 static.projectsforge.org >> ~/.ssh/known_hosts
   - eval $(ssh-agent -s)
   - echo "$SSH_PRIVATE_KEY" | ssh-add - 
   - sudo apt-get update

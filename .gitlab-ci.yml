@@ -5,8 +5,8 @@ stages:
 
 before_script:
   - source /etc/profile
-  - if [ which sdkw ]; then sdkw install java; fi
-  - if [ which sdkw ]; then sdkw install maven; fi
+  - if [ ! which sdkw ]; then sdkw install java; fi
+  - if [ ! which sdkw ]; then sdkw install maven; fi
   - source /etc/profile
   # remove any previously deployed artifact
   - rm -rf /home/user/.m2/repository/org/projectsforge/

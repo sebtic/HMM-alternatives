@@ -51,7 +51,7 @@ if  [ -f $SCRIPT ]; then
 	echo "Found build script $SCRIPT"
 	chmod +x $SCRIPT
 	echo "Running script with dockcross ..."
-find . -exec chmod a+rwx {} \;
+	sudo find . -exec chmod a+rwx {} \;
 	set -x
 	target/dockcross-${nativearch}-${nativeos} bash -c "id; ls -al; pwd; cd /work/target; ls -al; pwd; bash /work/$SCRIPT"
 	result=$?

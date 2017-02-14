@@ -7,7 +7,7 @@ nativeos=$2
 mkdir -p target
 
 # pull dockcross
-echo "Pulling dockcross...
+echo "Pulling dockcross..."
 cd target
 bash extracted/utils/scripts/pull-dockcross-${nativearch}-${nativeos}.sh > /dev/null
 cd ..

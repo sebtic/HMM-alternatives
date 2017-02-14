@@ -51,7 +51,8 @@ if  [ -f $SCRIPT ]; then
 	echo "Found build script $SCRIPT"
 	chmod +x $SCRIPT
 	echo "Running script with dockcross ..."
-target/dockcross-${nativearch}-${nativeos} bash -c "export HOME=/root; cd /work/target; ls -al; bash $SCRIPT"
+	pwd
+target/dockcross-${nativearch}-${nativeos} bash -c "export HOME=/root; cd /work/target; ls -al; pwd; bash /work/$SCRIPT"
 	result=$?
 	echo "Script has terminated"
 	exit $result

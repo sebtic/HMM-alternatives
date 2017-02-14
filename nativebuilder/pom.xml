@@ -281,83 +281,30 @@
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>pull-dockcross</id>
-						<phase>process-resources</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<exportAntProperties>true</exportAntProperties>
-							<target>
-								<mkdir dir="${project.build.directory}" />
-								<exec dir="${project.build.directory}" executable="bash" failonerror="true">
-									<arg
-										value="${project.build.directory}/extracted/utils/scripts/pull-dockcross-${native-arch}-${native-os}.sh" />
-								</exec>
-							</target>
-						</configuration>
-					</execution>
-					<execution>
-						<id>native-has-build</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>run</goal>
-						</goals>
-						<configuration>
-							<exportAntProperties>true</exportAntProperties>
-							<target>
-								<available
-									file="${project.build.directory}/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh"
-									property="has-build-script" />
-							</target>
-						</configuration>
-					</execution>					
-					
-					<execution>
 						<id>native-build</id>
 						<phase>compile</phase>
 						<goals>
 							<goal>run</goal>
 						</goals>
 						<configuration>
-							<target if="${has-build-script}">
-							<echo message="MARK 0" />
+							<exportAntProperties>true</exportAntProperties>
+							<target>
 								<mkdir dir="${project.build.directory}" />
-								<echo message="MARK 1" />
+								<!-- fill some files for later use -->
 								<property name="javah.classpath" refid="maven.compile.classpath" />
 								<echo file="${project.build.directory}/javah-classpath" message="${javah.classpath}" />
-								<echo message="MARK 2" />
-								<exec dir="${project.build.directory}/" executable="chmod" failonerror="true">
-									<arg value="+x" />
-									<arg value="${project.build.directory}/extracted/utils/scripts/prepare-classpath.sh" />
-								</exec>
-								<echo message="MARK 3" />
-								<exec dir="${project.build.directory}/" executable="bash" failonerror="true">
-									<arg value="-c" />
-									<arg value="${project.build.directory}/extracted/utils/scripts/prepare-classpath.sh" />
-								</exec>
-								<echo message="MARK 4" />
 								<echo file="${project.build.directory}/java-home" message="/work/target/sdkman/candidates/java/current/" />
 								<echo file="${project.build.directory}/testDisabled" message="${testDisabled}" />
 								<echo file="${project.build.directory}/version" message="${project.version}" />
-								<echo message="MARK 5" />
-								<exec dir="${project.build.directory}/../" executable="chmod" failonerror="true">
-									<arg value="+x" />
-									<arg value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
+                <!-- run the build script -->
+								<exec dir="${project.build.directory}/../" executable="bash" failonerror="true">
+									<arg value="${project.build.directory}/extracted/utils/scripts/native-build.sh" />
+									<arg value="${native-arch}" />
+									<arg value="${native-os}" />
 								</exec>
-								<echo message="MARK 6" />
-								<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-									failonerror="true">
-									<arg value="bash" />
-									<arg value="-c" />
-									<arg
-										value="cd target; extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
-								</exec>
-								<echo message="MARK 7" />
 							</target>
 						</configuration>
 					</execution>
-					
 					<execution>
 						<id>native-has-clean</id>
 						<phase>pre-clean</phase>
@@ -373,7 +320,7 @@
 							</target>
 						</configuration>
 					</execution>
-					
+
 					<execution>
 						<id>native-clean</id>
 						<phase>pre-clean</phase>

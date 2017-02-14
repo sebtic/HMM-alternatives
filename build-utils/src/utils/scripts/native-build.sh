@@ -4,6 +4,8 @@ echo "Trying to build for ${nativearch}-${nativeos} in $(pwd)..."
 nativearch=$1
 nativeos=$2
 
+chmod a+x target/extracted/utils/scripts/*
+
 mkdir -p target
 
 # pull dockcross
@@ -49,7 +51,7 @@ cd ..
 SCRIPT="target/extracted/utils/scripts/native-build-${nativearch}-${nativeos}.sh"
 if  [ -f $SCRIPT ]; then
 	echo "Found build script $SCRIPT"
-	chmod +x $SCRIPT
+	chmod a+x $SCRIPT
 	echo "Running script with dockcross ..."
 target/dockcross-${nativearch}-${nativeos} bash -c "cd target; bash -c /work/$SCRIPT"
 	result=$?

@@ -51,8 +51,7 @@ if  [ -f $SCRIPT ]; then
 	echo "Found build script $SCRIPT"
 	chmod +x $SCRIPT
 	echo "Running script with dockcross ..."
-	docker ps
-	target/dockcross-${nativearch}-${nativeos} bash -c "bash /work/$SCRIPT"
+	target/dockcross-${nativearch}-${nativeos} bash -c /work/$SCRIPT
 	result=$?
 	echo "Script has terminated"
 	exit $result

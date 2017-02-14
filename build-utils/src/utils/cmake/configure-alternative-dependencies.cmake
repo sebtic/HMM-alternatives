@@ -31,16 +31,12 @@ else()
   file(TO_NATIVE_PATH ${alternatives_extracted_debug_config_directory} config_path_debugrelease )
 endif()
 
-if( CROSSDEV )
-    set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${config_path_generic}:${config_path_debugrelease}" )
-else()
-    if( WIN32 )
-      set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH};${config_path_generic};${config_path_debugrelease}" )
-    else()
-      set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${config_path_generic}:${config_path_debugrelease}" )
-    endif()
-    # message( STATUS "ENV{PKG_CONFIG_PATH} set to $ENV{PKG_CONFIG_PATH}" )
-endif()
+set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${config_path_generic}:${config_path_debugrelease}" )
+message( STATUS "ENV{PKG_CONFIG_PATH} set to $ENV{PKG_CONFIG_PATH}" )
+
+# with dockcross, the PKG_CONFIG_PATH is unsetted by the wrapper then we need to use alternative environment variable
+set(ENV{PKG_CONFIG_PATH_i686_w64_mingw32_static} "$ENV{PKG_CONFIG_PATH_i686_w64_mingw32_static}:${config_path_generic}:${config_path_debugrelease}" )
+set(ENV{PKG_CONFIG_PATH_x86_64_w64_mingw32_static} "$ENV{PKG_CONFIG_PATH_x86_64_w64_mingw32_static}:${config_path_generic}:${config_path_debugrelease}" )
 
 if(ALTERNATIVE_DEPENDENCIES)
   message( STATUS "Checking main alternative dependencies" )
@@ -48,10 +44,11 @@ if(ALTERNATIVE_DEPENDENCIES)
     message( STATUS " - checking ${alt}..." )
     execute_process(
     COMMAND ${PKG_CONFIG_EXECUTABLE} ${alt} "--cflags"
-    OUTPUT_VARIABLE DEPS_CFLAGS
+    OUTPUT_VARIABLE DEPS_CFLAGS    
     RESULT_VARIABLE failed)
+    message( STATUS "failed ${failed} CFLAGS : ${DEPS_CFLAGS}" )
     if(failed)
-        message( FATAL_ERROR "An error occured while executing pkg-config of the dependency" )
+        message( FATAL_ERROR "An error occurred while executing pkg-config of the dependency" )
     endif()
 
     execute_process(

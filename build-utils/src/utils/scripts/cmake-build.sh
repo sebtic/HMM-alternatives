@@ -7,10 +7,9 @@ fi
 
 export SDKMAN_DIR=/work/target/sdkman
 curl -s get.sdkman.io | bash 
-set -x \
-&& echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config \
-&& echo "sdkman_auto_selfupdate=false" >> $SDKMAN_DIR/etc/config \
-&& echo "sdkman_insecure_ssl=false" >> $SDKMAN_DIR/etc/config
+echo "sdkman_auto_answer=true" > $SDKMAN_DIR/etc/config
+echo "sdkman_auto_selfupdate=false" >> $SDKMAN_DIR/etc/config
+echo "sdkman_insecure_ssl=false" >> $SDKMAN_DIR/etc/config
 source "$SDKMAN_DIR/bin/sdkman-init.sh" 
 sdk install java
 source "$SDKMAN_DIR/bin/sdkman-init.sh"

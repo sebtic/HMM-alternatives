@@ -54,9 +54,9 @@ if  [ -f $SCRIPT ]; then
 	chmod a+x $SCRIPT
 	echo "Running script with dockcross ..."
 	if [ -z "$DOCKCROSS_DNS" ]; then
-    target/dockcross-${nativearch}-${nativeos} bash -c "cd target; bash -c /work/$SCRIPT"
+    target/dockcross-${nativearch}-${nativeos} bash -c "export PARALLEL_BUILD=$PARALLEL_BUILD; cd target; bash -c /work/$SCRIPT"
   else
-    target/dockcross-${nativearch}-${nativeos} -a --dns=$DOCKCROSS_DNS bash -c "cd target; bash -c /work/$SCRIPT"
+    target/dockcross-${nativearch}-${nativeos} -a --dns=$DOCKCROSS_DNS bash -c "export PARALLEL_BUILD=$PARALLEL_BUILD; cd target; bash -c /work/$SCRIPT"
   fi
 	result=$?
 	echo "Script has terminated"

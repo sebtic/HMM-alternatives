@@ -12,7 +12,7 @@ which libtoolize && libtoolize --copy --force
 which autoreconf && autoreconf --force --install
 
 ./configure "--prefix=/work/target/build/${mode}/${processor}/installdir" --without-gnu-ld --disable-doxygen --disable-dot --disable-latex-docs --disable-static --host=x86_64-pc-mingw32 --target=x86_64-pc-mingw32
-make && make install
+make -j $(grep -c ^processor /proc/cpuinfo) && make install
 errorcode=$?
 
 mkdir -p /work/target/native/${mode}/lib /work/target/native/${mode}/include /work/target/native/${mode}/config

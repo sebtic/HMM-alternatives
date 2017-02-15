@@ -14,7 +14,7 @@ which autoreconf && autoreconf --force --install
 chmod 744 config/install-sh
 
 ./configure "--prefix=/work/target/build/${mode}/${processor}/installdir" --without-gnu-ld --disable-doxygen --disable-dot --disable-latex-docs --disable-static
-make && make install
+make -j $(grep -c ^processor /proc/cpuinfo) && make install
 errorcode=$?
 
 mkdir -p /work/target/native/${mode}/lib /work/target/native/${mode}/include /work/target/native/${mode}/config

@@ -7,6 +7,12 @@ nativeos=$2
 chmod a+x target/extracted/utils/scripts/*
 
 mkdir -p target
+
+# pull dockcross
+echo "Pulling dockcross..."
+cd target
+bash extracted/utils/scripts/pull-dockcross-${nativearch}-${nativeos}.sh > /dev/null
+cd ..
  
 # test script
 SCRIPT="target/extracted/utils/scripts/native-test-${nativearch}-${nativeos}.sh"

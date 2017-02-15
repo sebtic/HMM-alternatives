@@ -5,10 +5,4 @@ export CMAKE_SYSTEM_NAME=Linux
 export CMAKE_SYSTEM_PROCESSOR=x86_64
 export buildsystem=generic
 
-if [[ -f ../src/scripts/$(basename $0) ]]; then
-  echo "Testing with specific build scheme..."
-  . ../src/scripts/$(basename $0)
-else
-  echo "Testing with generic build scheme..."
-  . ${basedir}/extracted/utils/scripts/cmake-test.sh
-fi
+/work/target/extracted/utils/scripts/std-test-script.sh amd64 linux

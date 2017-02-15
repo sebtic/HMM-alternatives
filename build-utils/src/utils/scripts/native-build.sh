@@ -53,7 +53,11 @@ if  [ -f $SCRIPT ]; then
 	echo "Found build script $SCRIPT"
 	chmod a+x $SCRIPT
 	echo "Running script with dockcross ..."
-target/dockcross-${nativearch}-${nativeos} bash -c "cd target; bash -c /work/$SCRIPT"
+	if [ -z "$DOCKCROSS_DNS" ]; then
+    target/dockcross-${nativearch}-${nativeos} bash -c "cd target; bash -c /work/$SCRIPT"
+  else
+    target/dockcross-${nativearch}-${nativeos} -a --dns=$DOCKCROSS_DNS bash -c "cd target; bash -c /work/$SCRIPT"
+  fi
 	result=$?
 	echo "Script has terminated"
 	exit $result

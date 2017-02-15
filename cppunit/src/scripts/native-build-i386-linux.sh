@@ -1,35 +1,34 @@
 #!/bin/bash
 
-basedir=$(pwd)
 mode=generic
 processor=generic
 
-rm -rf ${basedir}/build/
-mkdir -p ${basedir}/build/${mode}/${processor}
-(cd ${basedir}/../src/native && tar -cpz .) | (cd ${basedir}/build/${mode}/${processor} && tar -xpz)
+rm -rf /work/target/build/
+mkdir -p /work/target/build/${mode}/${processor}
+(cd /work/target/../src/native && tar -cpz .) | (cd /work/target/build/${mode}/${processor} && tar -xpz)
 
-cd ${basedir}/build/${mode}/${processor}
-(which libtoolize) && libtoolize --copy --force
-(which autoreconf) && autoreconf --force --install
+cd /work/target/build/${mode}/${processor}
+which libtoolize && libtoolize --copy --force
+which autoreconf && autoreconf --force --install
 
 chmod 744 config/install-sh
 
-./configure "--prefix=${basedir}/build/${mode}/${processor}/installdir" --without-gnu-ld --disable-doxygen --disable-dot --disable-latex-docs --disable-static
+./configure "--prefix=/work/target/build/${mode}/${processor}/installdir" --without-gnu-ld --disable-doxygen --disable-dot --disable-latex-docs --disable-static
 make && make install
 errorcode=$?
 
-mkdir -p ${basedir}/native/${mode}/lib ${basedir}/native/${mode}/include ${basedir}/native/${mode}/config
+mkdir -p /work/target/native/${mode}/lib /work/target/native/${mode}/include /work/target/native/${mode}/config
 
-res=$(cp ${basedir}/build/${mode}/${processor}/installdir/lib/*.so ${basedir}/native/${mode}/lib/ 2>&1)
-res=$(cp ${basedir}/build/${mode}/${processor}/installdir/lib/*.a ${basedir}/native/${mode}/lib/ 2>&1)
+res=$(cp /work/target/build/${mode}/${processor}/installdir/lib/*.so /work/target/native/${mode}/lib/ 2>&1)
+res=$(cp /work/target/build/${mode}/${processor}/installdir/lib/*.a /work/target/native/${mode}/lib/ 2>&1)
 
-res=$(cp -r ${basedir}/build/${mode}/${processor}/installdir/include ${basedir}/native/${mode}/ 2>&1)
+res=$(cp -r /work/target/build/${mode}/${processor}/installdir/include /work/target/native/${mode}/ 2>&1)
 
-res=$(cp -r ${basedir}/../src/*.pc ${basedir}/native/${mode}/config/ 2>&1)
+res=$(cp -r /work/target/../src/*.pc /work/target/native/${mode}/config/ 2>&1)
 
-res=$(cp ${basedir}/build/${mode}/${processor}/COPYING ${basedir}/native/${mode}/ 2>&1)
-res=$(cp ${basedir}/build/${mode}/${processor}/README ${basedir}/native/${mode}/ 2>&1)
-res=$(cp ${basedir}/build/${mode}/${processor}/AUTHORS ${basedir}/native/${mode}/ 2>&1)
-res=$(cp ${basedir}/build/${mode}/${processor}/THANKS ${basedir}/native/${mode}/ 2>&1)
+res=$(cp /work/target/build/${mode}/${processor}/COPYING /work/target/native/${mode}/ 2>&1)
+res=$(cp /work/target/build/${mode}/${processor}/README /work/target/native/${mode}/ 2>&1)
+res=$(cp /work/target/build/${mode}/${processor}/AUTHORS /work/target/native/${mode}/ 2>&1)
+res=$(cp /work/target/build/${mode}/${processor}/THANKS /work/target/native/${mode}/ 2>&1)
 
 exit ${errorcode}

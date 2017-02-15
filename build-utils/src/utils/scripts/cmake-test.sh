@@ -1,19 +1,21 @@
 #!/bin/bash
 
-basedir=$(pwd)
+if [[ ! -f /work/src/CMakeLists.txt ]]; then
+    echo "Missing CMakeLists.txt in src. Continuing without testing."
+    exit 0
+fi
 
 [[ "$buildsystem" == "generic" ]] && modes=generic
 [[ "$buildsystem" == "default" ]] && modes="debug release"
 
-processor=$(${basedir}/extracted/utils/scripts/getprocessors.sh $buildsystem runnable)
+export SDKMAN_DIR=/work/target/sdkman
+source "$SDKMAN_DIR/bin/sdkman-init.sh"
+
+processor=$(/work/target/extracted/utils/scripts/getprocessors.sh $buildsystem runnable)
 
 for mode in $modes; do
   echo "Testing ${mode} version..."
-  cd ${basedir}/build/$processor/$mode
+  cd /work/target/build/$processor/$mode
 
-  if [[ -z $(echo "$CXX" | grep mingw32) ]]; then
-    PATH=${PATH}:${basedir}/extracted/generic/lib:${basedir}/extracted/${mode}/lib ctest -V
-  else
-    LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${basedir}/extracted/generic/lib:${basedir}/extracted/${mode}/lib ctest -V
-  fi
+  LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/work/target/extracted/generic/lib:/work/target/extracted/${mode}/lib ctest -V
 done

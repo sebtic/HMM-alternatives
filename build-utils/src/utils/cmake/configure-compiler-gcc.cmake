@@ -3,7 +3,7 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
   message( STATUS "Configuring compiler and linker flags" )
 
   # warnings
-  add_definitions( -Wall -Wimplicit -Wunused -Wshadow -Wconversion -Wfloat-equal -Wparentheses -Wundef -Wextra -pipe )
+  add_definitions( -Wall -Wunused -Wshadow -Wconversion -Wfloat-equal -Wparentheses -Wundef -Wextra -pipe )
 
   if("${CMAKE_BUILD_TYPE}" STREQUAL "Release")
     add_definitions( -Wuninitialized )

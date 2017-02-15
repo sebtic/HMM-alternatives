@@ -46,7 +46,6 @@ if(ALTERNATIVE_DEPENDENCIES)
     COMMAND ${PKG_CONFIG_EXECUTABLE} ${alt} "--cflags"
     OUTPUT_VARIABLE DEPS_CFLAGS    
     RESULT_VARIABLE failed)
-    message( STATUS "failed ${failed} CFLAGS : ${DEPS_CFLAGS}" )
     if(failed)
         message( FATAL_ERROR "An error occurred while executing pkg-config of the dependency" )
     endif()

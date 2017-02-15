@@ -55,22 +55,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-antrun-plugin</artifactId>
-						<executions>
-							<execution>
-								<id>native-has-doxygen</id>
-								<phase>process-classes</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<exportAntProperties>true</exportAntProperties>
-									<target>
-										<available
-											file="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh"
-											property="has-doxygen-script" />
-									</target>
-								</configuration>
-							</execution>
+						<executions>							
 							<execution>
 								<id>native-doxygen</id>
 								<phase>process-classes</phase>
@@ -78,11 +63,13 @@
 									<goal>run</goal>
 								</goals>
 								<configuration>
-									<target if="${has-doxygen-script}">
-										<exec dir="${project.build.directory}" executable="bash" failonerror="true">
-											<arg
-												value="${project.build.directory}/extracted/utils/scripts/native-doxygen-${native-arch}-${native-os}.sh" />
-										</exec>
+									<target>
+										<mkdir dir="${project.build.directory}" />
+                    <exec dir="${project.build.directory}/../" executable="bash" failonerror="true">
+                      <arg value="${project.build.directory}/extracted/utils/scripts/native-doxygen.sh" />
+                      <arg value="${native-arch}" />
+                      <arg value="${native-os}" />
+                    </exec>
 									</target>
 								</configuration>
 							</execution>
@@ -119,46 +106,18 @@
 						<artifactId>maven-antrun-plugin</artifactId>
 						<executions>
 							<execution>
-								<id>native-has-test</id>
-								<phase>test</phase>
-								<goals>
-									<goal>run</goal>
-								</goals>
-								<configuration>
-									<exportAntProperties>true</exportAntProperties>
-									<target>
-										<available
-											file="${project.build.directory}/extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh"
-											property="has-test-script" />
-									</target>
-								</configuration>
-							</execution>
-							<execution>
 								<id>native-test</id>
 								<phase>test</phase>
 								<goals>
 									<goal>run</goal>
 								</goals>
 								<configuration>
-									<target if="${has-test-script}">
+									<target>
 										<mkdir dir="${project.build.directory}" />
-										<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-											failonerror="true">
-											<arg value="bash" />
-											<arg value="-c" />
-											<arg value="ls -R; pwd" />
-										</exec>
-										<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-											failonerror="true">
-											<arg value="chmod" />
-											<arg value="+x" />
-											<arg value="target/extracted/utils/scripts/native-build-${native-arch}-${native-os}.sh" />
-										</exec>
-										<exec dir="${project.build.directory}/../" executable="target/dockcross-${native-arch}-${native-os}"
-											failonerror="true">
-											<arg value="bash" />
-											<arg value="-c" />
-											<arg value="cd target; extracted/utils/scripts/native-test-${native-arch}-${native-os}.sh" />
+										<exec dir="${project.build.directory}/../" executable="bash" failonerror="true">
+											<arg value="${project.build.directory}/extracted/utils/scripts/native-test.sh" />
+											<arg value="${native-arch}" />
+											<arg value="${native-os}" />
 										</exec>
 									</target>
 								</configuration>
@@ -296,7 +255,7 @@
 								<echo file="${project.build.directory}/java-home" message="/work/target/sdkman/candidates/java/current/" />
 								<echo file="${project.build.directory}/testDisabled" message="${testDisabled}" />
 								<echo file="${project.build.directory}/version" message="${project.version}" />
-                <!-- run the build script -->
+								<!-- run the build script -->
 								<exec dir="${project.build.directory}/../" executable="bash" failonerror="true">
 									<arg value="${project.build.directory}/extracted/utils/scripts/native-build.sh" />
 									<arg value="${native-arch}" />
